@@ -10,7 +10,12 @@ class Window:
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.screen.fill((255, 255, 255))
         self.basic_font = pygame.font.Font('Fonts/OpenSans-Regular.ttf', 25)
-        self.buttons = [MenuButton("activities", self.screen, True)]
+        self.buttons = [MenuButton("activities", self.screen, True),
+                        MenuButton("planer", self.screen, False),
+                        MenuButton("food", self.screen, False),
+                        MenuButton("sport", self.screen, False),
+                        MenuButton("social", self.screen, False),
+                        MenuButton("settings", self.screen, False)]
 
     def draw_frame(self):
         phone_bar_img = pygame.image.load('Images/phone_bar.png')
