@@ -13,9 +13,12 @@ class MenuButton:
             self.image_n = pygame.image.load('Images/activities_n.png')
             self.x = start_x
             self.active = active
+        if
 
     def draw(self):
         if self.active:
             self.screen.blit(self.image_n, (self.x, self.y)) #change to image_y
         else:
             self.screen.blit(self.image_n, (self.x, self.y))
+
+    
