@@ -1,4 +1,6 @@
-import pygame, sys,os
+import pygame
+import sys
+import os
 from pygame.locals import *
 from window import Window
 

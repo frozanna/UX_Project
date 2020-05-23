@@ -55,10 +55,12 @@ class MenuButton:
     def draw(self):
         if self.active:
             self.screen.blit(self.image_y, self.image_y_rect)
-            pygame.draw.rect(self.screen, (245, 245, 245), self.image_y_rect, 1)
+            pygame.draw.rect(self.screen, (245, 245, 245),
+                             self.image_y_rect, 1)
         else:
             self.screen.blit(self.image_n, self.image_n_rect)
-            pygame.draw.rect(self.screen, (245, 245, 245), self.image_n_rect, 1)
+            pygame.draw.rect(self.screen, (245, 245, 245),
+                             self.image_n_rect, 1)
 
     def pressed(self, mouse_pos):
         if self.active:

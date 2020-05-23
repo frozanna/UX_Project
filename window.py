@@ -9,15 +9,24 @@ from add_activity import ActivityButton
 class Window:
     def __init__(self):
         pygame.init()
+        pygame.display.set_caption('Kwolokwium')
+
+        # scroll screen
+        self.wheel_screen = pygame.surface.Surface(
+            (WINDOW_WIDTH, WINDOW_HEIGHT * 2))
+        self.wheel_screen.fill((255, 255, 255))
+        self.clock = pygame.time.Clock()
+        self.scroll_y = 0
+
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.screen.fill((255, 255, 255))
         self.basic_font = pygame.font.Font('Fonts/OpenSans-Regular.ttf', 25)
         self.menu_buttons = [MenuButton("activities", self.screen, True),
-                        MenuButton("planer", self.screen, False),
-                        MenuButton("food", self.screen, False),
-                        MenuButton("sport", self.screen, False),
-                        MenuButton("social", self.screen, False),
-                        MenuButton("settings", self.screen, False)]
+                             MenuButton("planer", self.screen, False),
+                             MenuButton("food", self.screen, False),
+                             MenuButton("sport", self.screen, False),
+                             MenuButton("social", self.screen, False),
+                             MenuButton("settings", self.screen, False)]
         self.activity_button = ActivityButton(self.screen)
 
     def draw_frame(self):  # draw all elements that should be always visible
@@ -33,7 +42,8 @@ class Window:
         for button in self.menu_buttons:
             button.draw()
 
-    def check_menu_buttons(self, mouse_pos):  # checks if user clicked on some item in menu
+    # checks if user clicked on some item in menu
+    def check_menu_buttons(self, mouse_pos):
         selected = None
         for button in self.menu_buttons:
             if button.pressed(mouse_pos):
@@ -47,18 +57,23 @@ class Window:
                     button.active = False
 
             if selected.is_activities():
-                pass  # draw proper elements
 
-    def check_activity_button(self, mouse_pos):
-        if self.activity_button.pressed(mouse_pos):
-            pass # do something maybe
+                self.draw_activities()
+
+    def draw_activities(self):
+        # replace with expected data - use the wheel screen, guys!
+        f = pygame.font.SysFont('', 125)
+        self.wheel_screen.blit(
+            f.render("Michal", True, (0, 0, 0)), (45, 100))
 
     def run(self):
+
+        # start from activities diagram
+        self.draw_activities()
+        self.screen.blit(self.wheel_screen, (0, self.scroll_y))
         self.draw_frame()
+
         while True:
-            self.screen.fill((255, 255, 255))  # reset screen after each frame
-            # here should we draw other items, such as activities cards, calendar etc.
-            self.draw_frame()
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -66,4 +81,12 @@ class Window:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = event.pos
                     self.check_menu_buttons(mouse_pos)
-                    self.check_activity_button(mouse_pos)
+                    # scroll control
+                    if event.button == 4:
+                        self.scroll_y = min(self.scroll_y + 15, 0)
+                    if event.button == 5:
+                        self.scroll_y = max(self.scroll_y - 15, -300)
+                    self.screen.blit(self.wheel_screen, (0, self.scroll_y))
+                    self.draw_frame()
+                    pygame.display.flip()
+                    self.clock.tick(60)
