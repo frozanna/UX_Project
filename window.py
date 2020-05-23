@@ -42,6 +42,8 @@ class Window:
                 else:
                     button.active = False
 
+        if selected.is_activities():
+            pass #draw proper elements
 
     def run(self):
         self.draw_frame()
