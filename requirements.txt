@@ -1,0 +1,13 @@
+numpy==1.18.2
+AppKit==0.2.8
+backports.statistics==0.1.0
+Cython==0.29.19
+Foundation==0.1.0a0.dev1
+ipaddr==2.2.0
+Numeric==24.2
+ordereddict==1.1
+psyco==1.6
+py2app==0.21
+PyOpenGL==3.1.5
+VideoCapture==0.9.5
+wincertstore==0.2

@@ -1,12 +1,14 @@
 import pygame
 import sys
 import pygame.gfxdraw
-from constant import WINDOW_HEIGHT, WINDOW_WIDTH
-from menu_button import MenuButton
-from add_activity import ActivityButton
+from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
+from Windows.menu_button import MenuButton
+from Activities.add_activity import ActivityButton
+from Activities.activity_panel import AcitivityPanel
 
 
 class Window:
+
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Kwolokwium')
@@ -21,15 +23,25 @@ class Window:
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.screen.fill((255, 255, 255))
         self.basic_font = pygame.font.Font('Fonts/OpenSans-Regular.ttf', 25)
-        self.menu_buttons = [MenuButton("activities", self.screen, True),
-                             MenuButton("planer", self.screen, False),
-                             MenuButton("food", self.screen, False),
-                             MenuButton("sport", self.screen, False),
-                             MenuButton("social", self.screen, False),
-                             MenuButton("settings", self.screen, False)]
+        self.menu_buttons = [
+            MenuButton("activities", self.screen, True),
+            MenuButton("planer", self.screen, False),
+            MenuButton("food", self.screen, False),
+            MenuButton("sport", self.screen, False),
+            MenuButton("social", self.screen, False),
+            MenuButton("settings", self.screen, False)
+        ]
+
         self.activity_button = ActivityButton(self.screen)
 
-    def draw_frame(self):  # draw all elements that should be always visible
+        self.acitvities = [
+            AcitivityPanel("greek_salad", self.wheel_screen, False),
+            AcitivityPanel("skinny_alfredo", self.wheel_screen, False),
+            AcitivityPanel("go_walk", self.wheel_screen, False)
+        ]
+
+    # draw all elements that should be always visible
+    def draw_frame(self):
         phone_bar_img = pygame.image.load('Images/phone_bar.png')
         self.screen.blit(phone_bar_img, (0, 0))
 
@@ -37,7 +49,8 @@ class Window:
         menu_h = menu_bar_img.get_height()
         self.screen.blit(menu_bar_img, (0, WINDOW_HEIGHT - menu_h))
 
-        self.activity_button.draw()
+        if self.menu_buttons[0].active:
+            self.activity_button.draw()
 
         for button in self.menu_buttons:
             button.draw()
@@ -57,14 +70,15 @@ class Window:
                     button.active = False
 
             if selected.is_activities():
-
                 self.draw_activities()
+            else:
+                # reset screen
+                self.wheel_screen.fill((255, 255, 255))
 
     def draw_activities(self):
-        # replace with expected data - use the wheel screen, guys!
-        f = pygame.font.SysFont('', 125)
-        self.wheel_screen.blit(
-            f.render("Michal", True, (0, 0, 0)), (45, 100))
+        for activitie in self.acitvities:
+            activitie.draw()
+
 
     def run(self):
 

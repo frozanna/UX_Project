@@ -1,8 +1,9 @@
 import pygame
-from constant import WINDOW_HEIGHT, WINDOW_WIDTH
+from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 
 
 class MenuButton:
+
     def __init__(self, name, screen, active=False):
         self.name = name
         self.screen = screen
@@ -43,7 +44,7 @@ class MenuButton:
             self.nac_x = start_x + space_x * 5
             self.ac_x = self.nac_x - 10
         else:
-            raise ValueError
+            raise ValueError("Incorrect button type")
 
         self.image_n_rect = self.image_n.get_rect()
         self.image_n_rect.x = self.nac_x

@@ -1,8 +1,9 @@
 import pygame
-from constant import WINDOW_HEIGHT, WINDOW_WIDTH
+from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 
 
 class ActivityButton:
+
     def __init__(self, screen):
         self.screen = screen
 
