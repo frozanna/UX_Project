@@ -71,3 +71,6 @@ class MenuButton:
 
     def is_activities(self):
         return self.name == "activities"
+
+    def is_planer(self):
+        return self.name == "planer"

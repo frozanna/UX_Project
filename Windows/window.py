@@ -5,6 +5,7 @@ from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 from Windows.menu_button import MenuButton
 from Activities.add_activity import ActivityButton
 from Activities.activity_panel import AcitivityPanel
+from Planer.planer_panel import PlanerPanel
 
 
 class Window:
@@ -46,6 +47,11 @@ class Window:
             AcitivityPanel("sleep", self.wheel_screen, False)
         ]
 
+        self.calendar = [
+            PlanerPanel("calendar", self.wheel_screen, False),
+            PlanerPanel("calendar_button", self.wheel_screen, False),
+        ]
+
     # draw all elements that should be always visible
     def draw_frame(self):
         phone_bar_img = pygame.image.load('Images/phone_bar.png')
@@ -78,24 +84,40 @@ class Window:
 
             if selected.is_activities():
                 self.draw_activities()
+                current_view = "activities"
+            elif selected.is_planer():
+                self.draw_calendar()
+                self.current_view = "calendar"
             else:
                 # reset screen
                 self.wheel_screen.fill((255, 255, 255))
+                self.current_view = "None"
 
         # activity panel
-        for activitie in self.acitvities:
+        if self.current_view == "activities":
+            contents = self.acitvities
+        elif self.current_view == "calendar":
+            contents = self.calendar
+        else:
+            contents = []
+
+        for content in contents:
             x, y = mouse_pos
-            if activitie.pressed((x, y - self.scroll_y)):
-                if activitie.active:
-                    activitie.active = False
+            if content.pressed((x, y - self.scroll_y)):
+                if content.active:
+                    content.active = False
                 else:
-                    activitie.active = True
+                    content.active = True
                 self.draw_activities()
 
 
     def draw_activities(self):
         for activitie in self.acitvities:
             activitie.draw()
+
+    def draw_calendar(self):
+        for b in self.calendar:
+            b.draw()
 
 
     def run(self):
