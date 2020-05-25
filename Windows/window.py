@@ -35,9 +35,15 @@ class Window:
         self.activity_button = ActivityButton(self.screen)
 
         self.acitvities = [
+            AcitivityPanel("you_have_1", self.wheel_screen, False),
             AcitivityPanel("greek_salad", self.wheel_screen, False),
             AcitivityPanel("skinny_alfredo", self.wheel_screen, False),
-            AcitivityPanel("go_walk", self.wheel_screen, False)
+            AcitivityPanel("go_walk", self.wheel_screen, False),
+            AcitivityPanel("you_have_2", self.wheel_screen, False),
+            AcitivityPanel("cardio", self.wheel_screen, False),
+            AcitivityPanel("exam", self.wheel_screen, False),
+            AcitivityPanel("you_have_3", self.wheel_screen, False),
+            AcitivityPanel("sleep", self.wheel_screen, False)
         ]
 
     # draw all elements that should be always visible
@@ -70,12 +76,13 @@ class Window:
                     button.active = False
 
             if selected.is_activities():
-                self.draw_activities()
+                self.draw_activities(mouse_pos)
             else:
                 # reset screen
                 self.wheel_screen.fill((255, 255, 255))
 
     def draw_activities(self):
+        selected = None
         for activitie in self.acitvities:
             activitie.draw()
 
