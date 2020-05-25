@@ -111,6 +111,7 @@ class Window:
                     else:
                         content.active = True
                     self.draw_activities()
+
         elif self.current_view == "calendar":
             contents = self.calendar
             for content in contents:
@@ -118,6 +119,7 @@ class Window:
                 if content.pressed((x, y - self.scroll_y)):
                     self.draw_day()
                     self.current_view = "day"
+
         elif self.current_view == "day":
             contents = self.day
             for content in contents:
@@ -164,10 +166,13 @@ class Window:
                         self.check_mouse(mouse_pos)
 
                     # scroll control
-                    if event.button == 4:
-                        self.scroll_y = min(self.scroll_y + 15, 0)
-                    if event.button == 5:
-                        self.scroll_y = max(self.scroll_y - 15, -300)
+                    if self.current_view == "activities":
+                        if event.button == 4:
+                            self.scroll_y = min(self.scroll_y + 15, 0)
+                        if event.button == 5:
+                            self.scroll_y = max(self.scroll_y - 15, -300)
+                    else:
+                        self.scroll_y = 0;
                     self.screen.blit(self.wheel_screen, (0, self.scroll_y))
                     self.draw_frame()
                     pygame.display.flip()
