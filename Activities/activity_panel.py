@@ -62,11 +62,11 @@ class AcitivityPanel:
     def draw(self):
         if self.active:
             self.screen.blit(self.image_y, self.image_y_rect)
-            pygame.draw.rect(self.screen, (245, 245, 245),
+            pygame.draw.rect(self.screen, (255, 255, 255),
                              self.image_y_rect, 1)
         else:
             self.screen.blit(self.image_n, self.image_n_rect)
-            pygame.draw.rect(self.screen, (245, 245, 245),
+            pygame.draw.rect(self.screen, (255, 255, 255),
                              self.image_n_rect, 1)
 
     def pressed(self, mouse_pos):
@@ -75,3 +75,5 @@ class AcitivityPanel:
                 return self.image_y_rect.collidepoint(mouse_pos)
             else:
                 return self.image_n_rect.collidepoint(mouse_pos)
+        else:
+            return False
