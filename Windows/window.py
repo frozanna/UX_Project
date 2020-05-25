@@ -84,15 +84,14 @@ class Window:
 
         # activity panel
         for activitie in self.acitvities:
-            if activitie.pressed(mouse_pos):
-                selected = activitie
-        
-        if selected:
-            if activitie:
+            x, y = mouse_pos
+            if activitie.pressed((x, y - self.scroll_y)):
                 if activitie.active:
                     activitie.active = False
                 else:
                     activitie.active = True
+                self.draw_activities()
+
 
     def draw_activities(self):
         for activitie in self.acitvities:
