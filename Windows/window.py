@@ -62,8 +62,9 @@ class Window:
             button.draw()
 
     # checks if user clicked on some item in menu
-    def check_menu_buttons(self, mouse_pos):
+    def check_mouse(self, mouse_pos):
         selected = None
+        # main buttons
         for button in self.menu_buttons:
             if button.pressed(mouse_pos):
                 selected = button
@@ -76,13 +77,24 @@ class Window:
                     button.active = False
 
             if selected.is_activities():
-                self.draw_activities(mouse_pos)
+                self.draw_activities()
             else:
                 # reset screen
                 self.wheel_screen.fill((255, 255, 255))
 
+        # activity panel
+        for activitie in self.acitvities:
+            if activitie.pressed(mouse_pos):
+                selected = activitie
+        
+        if selected:
+            if activitie:
+                if activitie.active:
+                    activitie.active = False
+                else:
+                    activitie.active = True
+
     def draw_activities(self):
-        selected = None
         for activitie in self.acitvities:
             activitie.draw()
 
@@ -101,7 +113,9 @@ class Window:
                     sys.exit(0)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = event.pos
-                    self.check_menu_buttons(mouse_pos)
+                    if event.button == 1:
+                        self.check_mouse(mouse_pos)
+
                     # scroll control
                     if event.button == 4:
                         self.scroll_y = min(self.scroll_y + 15, 0)
