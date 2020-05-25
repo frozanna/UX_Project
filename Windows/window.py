@@ -20,6 +20,7 @@ class Window:
         self.wheel_screen.fill((255, 255, 255))
         self.clock = pygame.time.Clock()
         self.scroll_y = 0
+        self.current_view = "activities"
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.screen.fill((255, 255, 255))
@@ -84,7 +85,7 @@ class Window:
 
             if selected.is_activities():
                 self.draw_activities()
-                current_view = "activities"
+                self.current_view = "activities"
             elif selected.is_planer():
                 self.draw_calendar()
                 self.current_view = "calendar"
@@ -112,10 +113,12 @@ class Window:
 
 
     def draw_activities(self):
+        self.wheel_screen.fill((255, 255, 255))
         for activitie in self.acitvities:
             activitie.draw()
 
     def draw_calendar(self):
+        self.wheel_screen.fill((255, 255, 255))
         for b in self.calendar:
             b.draw()
 
