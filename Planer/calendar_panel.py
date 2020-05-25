@@ -2,7 +2,7 @@ import pygame
 from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 
 
-class PlanerPanel:
+class CalendarPanel:
     def __init__(self, name, screen, active=False):
         self.name = name
         self.screen = screen

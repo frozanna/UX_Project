@@ -5,7 +5,8 @@ from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 from Windows.menu_button import MenuButton
 from Activities.add_activity import ActivityButton
 from Activities.activity_panel import AcitivityPanel
-from Planer.planer_panel import PlanerPanel
+from Planer.calendar_panel import CalendarPanel
+from Planer.day_panel import DayPanel
 
 
 class Window:
@@ -49,8 +50,13 @@ class Window:
         ]
 
         self.calendar = [
-            PlanerPanel("calendar", self.wheel_screen, False),
-            PlanerPanel("calendar_button", self.wheel_screen, False),
+            CalendarPanel("calendar", self.wheel_screen, False),
+            CalendarPanel("calendar_button", self.wheel_screen, False),
+        ]
+
+        self.day = [
+            DayPanel("day", self.wheel_screen, False),
+            DayPanel("day_button", self.wheel_screen, False),
         ]
 
     # draw all elements that should be always visible
@@ -97,19 +103,31 @@ class Window:
         # activity panel
         if self.current_view == "activities":
             contents = self.acitvities
+            for content in contents:
+                x, y = mouse_pos
+                if content.pressed((x, y - self.scroll_y)):
+                    if content.active:
+                        content.active = False
+                    else:
+                        content.active = True
+                    self.draw_activities()
         elif self.current_view == "calendar":
             contents = self.calendar
-        else:
-            contents = []
+            for content in contents:
+                x, y = mouse_pos
+                if content.pressed((x, y - self.scroll_y)):
+                    self.draw_day()
+                    self.current_view = "day"
+        elif self.current_view == "day":
+            contents = self.day
+            for content in contents:
+                x, y = mouse_pos
+                if content.pressed((x, y - self.scroll_y)):
+                    self.draw_calendar()
+                    self.current_view = "calendar"
 
-        for content in contents:
-            x, y = mouse_pos
-            if content.pressed((x, y - self.scroll_y)):
-                if content.active:
-                    content.active = False
-                else:
-                    content.active = True
-                self.draw_activities()
+
+
 
 
     def draw_activities(self):
@@ -120,6 +138,11 @@ class Window:
     def draw_calendar(self):
         self.wheel_screen.fill((255, 255, 255))
         for b in self.calendar:
+            b.draw()
+
+    def draw_day(self):
+        self.wheel_screen.fill((255, 255, 255))
+        for b in self.day:
             b.draw()
 
 
