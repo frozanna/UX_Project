@@ -5,6 +5,8 @@ from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 from Windows.menu_button import MenuButton
 from Activities.add_activity import ActivityButton
 from Activities.activity_panel import AcitivityPanel
+from Planer.calendar_panel import CalendarPanel
+from Planer.day_panel import DayPanel
 
 
 class Window:
@@ -19,6 +21,7 @@ class Window:
         self.wheel_screen.fill((255, 255, 255))
         self.clock = pygame.time.Clock()
         self.scroll_y = 0
+        self.current_view = "activities"
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.screen.fill((255, 255, 255))
@@ -44,6 +47,16 @@ class Window:
             AcitivityPanel("exam", self.wheel_screen, False),
             AcitivityPanel("you_have_3", self.wheel_screen, False),
             AcitivityPanel("sleep", self.wheel_screen, False)
+        ]
+
+        self.calendar = [
+            CalendarPanel("calendar", self.wheel_screen, False),
+            CalendarPanel("calendar_button", self.wheel_screen, False),
+        ]
+
+        self.day = [
+            DayPanel("day", self.wheel_screen, False),
+            DayPanel("day_button", self.wheel_screen, False),
         ]
 
     # draw all elements that should be always visible
@@ -78,24 +91,59 @@ class Window:
 
             if selected.is_activities():
                 self.draw_activities()
+                self.current_view = "activities"
+            elif selected.is_planer():
+                self.draw_calendar()
+                self.current_view = "calendar"
             else:
                 # reset screen
                 self.wheel_screen.fill((255, 255, 255))
+                self.current_view = "None"
 
         # activity panel
-        for activitie in self.acitvities:
-            x, y = mouse_pos
-            if activitie.pressed((x, y - self.scroll_y)):
-                if activitie.active:
-                    activitie.active = False
-                else:
-                    activitie.active = True
-                self.draw_activities()
+        if self.current_view == "activities":
+            contents = self.acitvities
+            for content in contents:
+                x, y = mouse_pos
+                if content.pressed((x, y - self.scroll_y)):
+                    if content.active:
+                        content.active = False
+                    else:
+                        content.active = True
+                    self.draw_activities()
+        elif self.current_view == "calendar":
+            contents = self.calendar
+            for content in contents:
+                x, y = mouse_pos
+                if content.pressed((x, y - self.scroll_y)):
+                    self.draw_day()
+                    self.current_view = "day"
+        elif self.current_view == "day":
+            contents = self.day
+            for content in contents:
+                x, y = mouse_pos
+                if content.pressed((x, y - self.scroll_y)):
+                    self.draw_calendar()
+                    self.current_view = "calendar"
+
+
+
 
 
     def draw_activities(self):
+        self.wheel_screen.fill((255, 255, 255))
         for activitie in self.acitvities:
             activitie.draw()
+
+    def draw_calendar(self):
+        self.wheel_screen.fill((255, 255, 255))
+        for b in self.calendar:
+            b.draw()
+
+    def draw_day(self):
+        self.wheel_screen.fill((255, 255, 255))
+        for b in self.day:
+            b.draw()
 
 
     def run(self):
