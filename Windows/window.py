@@ -49,14 +49,16 @@ class Window:
             AcitivityPanel("sleep", self.wheel_screen, False)
         ]
 
+        self.selectedacitvities = []
+
         self.calendar = [
             CalendarPanel("calendar", self.wheel_screen, False),
             CalendarPanel("calendar_button", self.wheel_screen, False),
         ]
 
         self.day = [
-            DayPanel("day", self.wheel_screen, False),
-            DayPanel("day_button", self.wheel_screen, False),
+            DayPanel("day", self.wheel_screen, [], False),
+            DayPanel("day_button", self.wheel_screen, self.selectedacitvities, False),
         ]
 
     # draw all elements that should be always visible
@@ -77,6 +79,7 @@ class Window:
     # checks if user clicked on some item in menu
     def check_mouse(self, mouse_pos):
         selected = None
+
         # main buttons
         for button in self.menu_buttons:
             if button.pressed(mouse_pos):
@@ -108,8 +111,10 @@ class Window:
                 if content.pressed((x, y - self.scroll_y)):
                     if content.active:
                         content.active = False
+                        self.selectedacitvities.remove(content.name)
                     else:
                         content.active = True
+                        self.selectedacitvities.append(content.name)
                     self.draw_activities()
 
         elif self.current_view == "calendar":

@@ -70,7 +70,7 @@ class AcitivityPanel:
                              self.image_n_rect, 1)
 
     def pressed(self, mouse_pos):
-        if self.name not in ["you_have_1","you_have_2","you_have_3"]:
+        if self.name not in ["you_have_1", "you_have_2", "you_have_3"]:
             if self.active:
                 return self.image_y_rect.collidepoint(mouse_pos)
             else:
