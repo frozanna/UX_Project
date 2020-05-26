@@ -42,52 +42,23 @@ class DayPanel:
             for activity in self.activities:
                 if activity == "greek_salad":
                     self.image_y = pygame.image.load('Images/plact_1.png')
-                    self.image_y_rect = self.image_y.get_rect()
-                    self.image_y_rect.x = self.x + 43
-                    self.image_y_rect.y = self.y + 235
-                    self.screen.blit(self.image_y, self.image_y_rect)
-                    pygame.draw.rect(self.screen, (245, 245, 245),
-                                     self.image_y_rect, 1)
+                    self.drawactivity(self.image_y, 43, 235)
                 elif activity == "skinny_alfredo":
                     self.image_y = pygame.image.load('Images/plact_2.png')
-                    self.image_y_rect = self.image_y.get_rect()
-                    self.image_y_rect.x = self.x + 43
-                    self.image_y_rect.y = self.y + 235
-                    self.screen.blit(self.image_y, self.image_y_rect)
-                    pygame.draw.rect(self.screen, (245, 245, 245),
-                                     self.image_y_rect, 1)
+                    self.drawactivity(self.image_y, 43, 235)
                 elif activity == "go_walk":
                     self.image_y = pygame.image.load('Images/plact_3.png')
-                    self.image_y_rect = self.image_y.get_rect()
-                    self.image_y_rect.x = self.x + 43
-                    self.image_y_rect.y = self.y + 235
-                    self.screen.blit(self.image_y, self.image_y_rect)
-                    pygame.draw.rect(self.screen, (245, 245, 245),
-                                     self.image_y_rect, 1)
+                    self.drawactivity(self.image_y, 43, 235)
                 elif activity == "cardio":
                     self.image_y = pygame.image.load('Images/plact_4.png')
-                    self.image_y_rect = self.image_y.get_rect()
-                    self.image_y_rect.x = self.x + 43
-                    self.image_y_rect.y = self.y + 390
-                    self.screen.blit(self.image_y, self.image_y_rect)
-                    pygame.draw.rect(self.screen, (245, 245, 245),
-                                     self.image_y_rect, 1)
+                    self.drawactivity(self.image_y, 43, 390)
                 elif activity == "exam":
                     self.image_y = pygame.image.load('Images/plact_5.png')
-                    self.image_y_rect = self.image_y.get_rect()
-                    self.image_y_rect.x = self.x + 43
-                    self.image_y_rect.y = self.y + 410
-                    self.screen.blit(self.image_y, self.image_y_rect)
-                    pygame.draw.rect(self.screen, (245, 245, 245),
-                                     self.image_y_rect, 1)
+                    self.drawactivity(self.image_y, 43, 410)
                 elif activity == "sleep":
                     self.image_y = pygame.image.load('Images/plact_6.png')
-                    self.image_y_rect = self.image_y.get_rect()
-                    self.image_y_rect.x = self.x + 43
-                    self.image_y_rect.y = self.y + 473
-                    self.screen.blit(self.image_y, self.image_y_rect)
-                    pygame.draw.rect(self.screen, (245, 245, 245),
-                                     self.image_y_rect, 1)
+                    self.drawactivity(self.image_y, 43, 473)
+
 
     def pressed(self, mouse_pos):
         if self.name == "day_button":
@@ -95,3 +66,11 @@ class DayPanel:
                 return self.image_y_rect.collidepoint(mouse_pos)
             else:
                 return self.image_n_rect.collidepoint(mouse_pos)
+
+    def drawactivity(self, image, x, y):
+        self.image_y_rect = image.get_rect()
+        self.image_y_rect.x = self.x + x
+        self.image_y_rect.y = self.y + y
+        self.screen.blit(image, self.image_y_rect)
+        pygame.draw.rect(self.screen, (245, 245, 245),
+                         self.image_y_rect, 1)
