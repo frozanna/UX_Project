@@ -133,10 +133,6 @@ class Window:
                     self.draw_calendar()
                     self.current_view = "calendar"
 
-
-
-
-
     def draw_activities(self):
         self.wheel_screen.fill((255, 255, 255))
         for activitie in self.acitvities:
@@ -152,9 +148,7 @@ class Window:
         for b in self.day:
             b.draw()
 
-
     def run(self):
-
         # start from activities diagram
         self.draw_activities()
         self.screen.blit(self.wheel_screen, (0, self.scroll_y))
