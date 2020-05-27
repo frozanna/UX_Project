@@ -13,3 +13,4 @@ Contributors
 - [Anna Świadek](https://github.com/frozanna)
 - [Michał Szkarłat](https://github.com/mikiisz)
 - [Mikołaj Tomalik](https://github.com/tomalikem)
+- [Łukasz Socha](https://github.com/malysz)
