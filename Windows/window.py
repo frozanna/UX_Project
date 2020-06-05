@@ -49,6 +49,9 @@ class Window:
             AcitivityPanel("sleep", self.wheel_screen, False)
         ]
 
+        self.activity_to_block = {self.acitvities[1]: 0, self.acitvities[2]: 0, self.acitvities[3]: 0, self.acitvities[5]: 1, self.acitvities[6]: 1, self.acitvities[8]: 2}
+        self.block_to_activities = {0: self.acitvities[1:4], 1: self.acitvities[5:7], 2: [self.acitvities[8]]}
+
         self.selectedacitvities = []
 
         self.calendar = [
@@ -113,6 +116,12 @@ class Window:
                         content.active = False
                         self.selectedacitvities.remove(content.name)
                     else:
+                        block = self.activity_to_block[content]
+                        activities = self.block_to_activities[block]
+                        for activity in activities:
+                            activity.active = False
+                            if activity.name in self.selectedacitvities:
+                                self.selectedacitvities.remove(activity.name)
                         content.active = True
                         self.selectedacitvities.append(content.name)
                     self.draw_activities()
