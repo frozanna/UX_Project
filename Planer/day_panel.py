@@ -21,7 +21,7 @@ class DayPanel:
             self.y = 50
             self.x = 0
         else:
-            raise ValueError("Incorrect acitivity panel type")
+            raise ValueError("Incorrect day panel type")
 
         self.image_n_rect = self.image_n.get_rect()
         self.image_n_rect.x = self.x

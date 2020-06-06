@@ -21,7 +21,7 @@ class CalendarPanel:
             self.y = 117
             self.x = 112
         else:
-            raise ValueError("Incorrect acitivity panel type")
+            raise ValueError("Incorrect calendar panel type")
 
         self.image_n_rect = self.image_n.get_rect()
         self.image_n_rect.x = self.x

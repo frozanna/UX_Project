@@ -74,3 +74,6 @@ class MenuButton:
 
     def is_planer(self):
         return self.name == "planer"
+
+    def is_friends(self):
+        return self.name == "social"

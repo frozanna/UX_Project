@@ -7,6 +7,7 @@ from Activities.add_activity import ActivityButton
 from Activities.activity_panel import AcitivityPanel
 from Planer.calendar_panel import CalendarPanel
 from Planer.day_panel import DayPanel
+from Friends.friends_panel import FriendsPanael
 
 
 class Window:
@@ -49,8 +50,20 @@ class Window:
             AcitivityPanel("sleep", self.wheel_screen, False)
         ]
 
-        self.activity_to_block = {self.acitvities[1]: 0, self.acitvities[2]: 0, self.acitvities[3]: 0, self.acitvities[5]: 1, self.acitvities[6]: 1, self.acitvities[8]: 2}
-        self.block_to_activities = {0: self.acitvities[1:4], 1: self.acitvities[5:7], 2: [self.acitvities[8]]}
+        self.activity_to_block = {
+            self.acitvities[1]: 0,
+            self.acitvities[2]: 0,
+            self.acitvities[3]: 0,
+            self.acitvities[5]: 1,
+            self.acitvities[6]: 1,
+            self.acitvities[8]: 2
+        }
+
+        self.block_to_activities = {
+            0: self.acitvities[1:4],
+            1: self.acitvities[5:7],
+            2: [self.acitvities[8]]
+        }
 
         self.selectedacitvities = []
 
@@ -61,7 +74,12 @@ class Window:
 
         self.day = [
             DayPanel("day", self.wheel_screen, [], False),
-            DayPanel("day_button", self.wheel_screen, self.selectedacitvities, False),
+            DayPanel("day_button", self.wheel_screen,
+                     self.selectedacitvities, False),
+        ]
+
+        self.friends = [
+            FriendsPanael("static_panel", self.wheel_screen)
         ]
 
     # draw all elements that should be always visible
@@ -101,6 +119,9 @@ class Window:
             elif selected.is_planer():
                 self.draw_calendar()
                 self.current_view = "calendar"
+            elif selected.is_friends():
+                self.draw_friends()
+                self.current_view = "friends"
             else:
                 # reset screen
                 self.wheel_screen.fill((255, 255, 255))
@@ -157,6 +178,11 @@ class Window:
         for b in self.day:
             b.draw()
 
+    def draw_friends(self):
+        self.wheel_screen.fill((255, 255, 255))
+        for b in self.friends:
+            b.draw()
+
     def run(self):
         # start from activities diagram
         self.draw_activities()
@@ -174,13 +200,13 @@ class Window:
                         self.check_mouse(mouse_pos)
 
                     # scroll control
-                    if self.current_view == "activities":
+                    if self.current_view in ["activities", "friends"]:
                         if event.button == 4:
                             self.scroll_y = min(self.scroll_y + 15, 0)
                         if event.button == 5:
                             self.scroll_y = max(self.scroll_y - 15, -300)
                     else:
-                        self.scroll_y = 0;
+                        self.scroll_y = 0
                     self.screen.blit(self.wheel_screen, (0, self.scroll_y))
                     self.draw_frame()
                     pygame.display.flip()
