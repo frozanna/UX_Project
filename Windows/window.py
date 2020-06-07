@@ -127,7 +127,6 @@ class Window:
                 elif self.current_view == 'calendar' or self.current_view == 'day':
                     self.menu_buttons[1].active = True
                 self.activity_button.change_last_view(self.current_view)
-                print(self.current_view)
                 self.current_view = "create_activity"
             elif selected.is_activities():
                 self.draw_activities()

@@ -26,7 +26,6 @@ class ActivityButton:
         self.last_view = view
 
 
-
 class CreateActivityPanel:
     def __init__(self, screen):
 
