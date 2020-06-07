@@ -2,7 +2,7 @@ import pygame
 from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 
 
-class FriendsPanael:
+class FriendsPanel:
     def __init__(self, name, screen):
         self.name = name
         self.screen = screen

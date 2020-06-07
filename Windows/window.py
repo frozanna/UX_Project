@@ -3,11 +3,11 @@ import sys
 import pygame.gfxdraw
 from Windows.constants import WINDOW_HEIGHT, WINDOW_WIDTH
 from Windows.menu_button import MenuButton
-from Activities.add_activity import ActivityButton
+from Activities.add_activity import ActivityButton, CreateActivityPanel
 from Activities.activity_panel import AcitivityPanel
 from Planer.calendar_panel import CalendarPanel
 from Planer.day_panel import DayPanel
-from Friends.friends_panel import FriendsPanael
+from Friends.friends_panel import FriendsPanel
 
 
 class Window:
@@ -79,7 +79,11 @@ class Window:
         ]
 
         self.friends = [
-            FriendsPanael("static_panel", self.wheel_screen)
+            FriendsPanel("static_panel", self.wheel_screen)
+        ]
+
+        self.create_activity = [
+            CreateActivityPanel(self.wheel_screen)
         ]
 
     # draw all elements that should be always visible
@@ -91,7 +95,7 @@ class Window:
         menu_h = menu_bar_img.get_height()
         self.screen.blit(menu_bar_img, (0, WINDOW_HEIGHT - menu_h))
 
-        if self.menu_buttons[0].active:
+        if self.current_view == 'activities' or self.current_view == 'calendar' or self.current_view == "day":
             self.activity_button.draw()
 
         for button in self.menu_buttons:
@@ -106,6 +110,9 @@ class Window:
             if button.pressed(mouse_pos):
                 selected = button
 
+        if self.activity_button.pressed(mouse_pos):
+            selected = self.activity_button
+
         if selected:
             for button in self.menu_buttons:
                 if selected == button:
@@ -113,7 +120,16 @@ class Window:
                 else:
                     button.active = False
 
-            if selected.is_activities():
+            if selected == self.activity_button:
+                self.draw_create_activity()
+                if self.current_view == 'activities':
+                    self.menu_buttons[0].active = True
+                elif self.current_view == 'calendar' or self.current_view == 'day':
+                    self.menu_buttons[1].active = True
+                self.activity_button.change_last_view(self.current_view)
+                print(self.current_view)
+                self.current_view = "create_activity"
+            elif selected.is_activities():
                 self.draw_activities()
                 self.current_view = "activities"
             elif selected.is_planer():
@@ -126,6 +142,7 @@ class Window:
                 # reset screen
                 self.wheel_screen.fill((255, 255, 255))
                 self.current_view = "None"
+
 
         # activity panel
         if self.current_view == "activities":
@@ -146,7 +163,6 @@ class Window:
                         content.active = True
                         self.selectedacitvities.append(content.name)
                     self.draw_activities()
-
         elif self.current_view == "calendar":
             contents = self.calendar
             for content in contents:
@@ -154,7 +170,6 @@ class Window:
                 if content.pressed((x, y - self.scroll_y)):
                     self.draw_day()
                     self.current_view = "day"
-
         elif self.current_view == "day":
             contents = self.day
             for content in contents:
@@ -162,11 +177,24 @@ class Window:
                 if content.pressed((x, y - self.scroll_y)):
                     self.draw_calendar()
                     self.current_view = "calendar"
+        elif self.current_view == "create_activity":
+            x, y = mouse_pos
+            if self.create_activity[0].buttons_pressed((x, y - self.scroll_y)):
+                if self.activity_button.last_view == 'activities':
+                    self.draw_activities()
+                    self.current_view = 'activities'
+                elif self.activity_button.last_view == 'calendar':
+                    self.draw_calendar()
+                    self.current_view = 'calendar'
+                elif self.activity_button.last_view == 'day':
+                    self.draw_day()
+                    self.current_view = 'day'
+
 
     def draw_activities(self):
         self.wheel_screen.fill((255, 255, 255))
-        for activitie in self.acitvities:
-            activitie.draw()
+        for activity in self.acitvities:
+            activity.draw()
 
     def draw_calendar(self):
         self.wheel_screen.fill((255, 255, 255))
@@ -181,6 +209,11 @@ class Window:
     def draw_friends(self):
         self.wheel_screen.fill((255, 255, 255))
         for b in self.friends:
+            b.draw()
+
+    def draw_create_activity(self):
+        self.wheel_screen.fill((255, 255, 255))
+        for b in self.create_activity:
             b.draw()
 
     def run(self):
