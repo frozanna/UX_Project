@@ -77,3 +77,6 @@ class MenuButton:
 
     def is_friends(self):
         return self.name == "social"
+
+    def is_error(self):
+        return self.name in ["food", "settings", "sport"]
