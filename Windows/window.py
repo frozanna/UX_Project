@@ -40,6 +40,7 @@ class Window:
         self.activity_button = ActivityButton(self.screen)
 
         self.acitvities = [
+            AcitivityPanel("date_1", self.wheel_screen, False),
             AcitivityPanel("you_have_1", self.wheel_screen, False),
             AcitivityPanel("greek_salad", self.wheel_screen, False),
             AcitivityPanel("skinny_alfredo", self.wheel_screen, False),
@@ -48,16 +49,17 @@ class Window:
             AcitivityPanel("cardio", self.wheel_screen, False),
             AcitivityPanel("exam", self.wheel_screen, False),
             AcitivityPanel("you_have_3", self.wheel_screen, False),
-            AcitivityPanel("sleep", self.wheel_screen, False)
+            AcitivityPanel("sleep", self.wheel_screen, False),
+            AcitivityPanel("date_2", self.wheel_screen, False)
         ]
 
         self.activity_to_block = {
-            self.acitvities[1]: 0,
             self.acitvities[2]: 0,
             self.acitvities[3]: 0,
-            self.acitvities[5]: 1,
+            self.acitvities[4]: 0,
             self.acitvities[6]: 1,
-            self.acitvities[8]: 2
+            self.acitvities[7]: 1,
+            self.acitvities[9]: 2
         }
 
         self.block_to_activities = {
